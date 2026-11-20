@@ -110,3 +110,36 @@ class RequestManager:
 
         with open("log.txt", "a", encoding="utf-8") as file:
             file.write(log + "\n")
+        print(log)
+        
+    def show_logs(self, filename="log.txt"):
+          with open(filename,"r",encoding="utf_8") as file:
+              for line in file:
+                  print(line.strip())  
+                  
+    def stats_request(self, filename="log.txt"):
+        AD_BLOCK = 0
+        SANCTION = 0
+        CACHE = 0
+        UPSTREAM = 0
+        ERRORS = 0 
+        TOTAL = 0
+        with open(filename,"r", encoding="utf_8") as file:
+            for line in file:
+                part = line.strip().split("|")
+                TOTAL += 1
+                if part[2].strip() == "LOCAL" or part[3].strip() == "AD_BLOCK":
+                    AD_BLOCK += 1
+                elif part[2].strip() == "SANCTION":
+                    SANCTION += 1
+                elif part[2].strip() == "CACHE":
+                    CACHE += 1
+                elif part[2].strip() == "UPSTREAM":
+                    UPSTREAM += 1
+                if part[3].strip() != "AD_BLOCK" and part[3].strip() != "OK":
+                    ERRORS += 1
+            
+
+        print(f"Total: {TOTAL} | AD_BLOCK: {AD_BLOCK} | SANCTION: {SANCTION} | CACHE: {CACHE} | UPSTREAM: {UPSTREAM} | ERRORS: {ERRORS}")
+            
+        

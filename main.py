@@ -21,12 +21,26 @@ client = UDPClient()
 
 while True:
 
-    raw_domain = input("Enter domain (or exit): ")
+    raw_domain = input("Enter domain (or exit or stats or log or cache): ")
 
     if raw_domain.strip().lower() == "exit":
         print("Bye.")
         break
-
+    elif raw_domain.strip().lower() == "stats":
+        request_manager.stats_request()
+        continue
+    elif raw_domain.strip().lower() == "log":
+        request_manager.show_logs()
+        continue
+    elif raw_domain.strip().lower() == "cache":
+       entries = request_manager.cache.get_all()
+       if not entries:
+          print("Cache is empty.")
+       else:
+          for domain, ip, ttl in entries:
+              print(f"{domain} | {ip} | {ttl}")
+       print(entries)
+       continue
     domain = raw_domain.strip().lower().rstrip(".")
 
     display_domain = domain if domain else "(empty)"
