@@ -5,7 +5,8 @@ from request_manager import RequestManager
 config = {
     "sinkhole_ip": "0.0.0.0",
     "proxy_ip": "192.0.2.10",
-    "local_ttl": 60
+    "local_ttl": 60,
+    "cache_enabled": True
 }
 
 ad_list = [

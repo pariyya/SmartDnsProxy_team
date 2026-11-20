@@ -1,4 +1,3 @@
-
 import ipaddress
 from pathlib import Path
 
@@ -92,7 +91,7 @@ elif cache_value == "false":
 else:
     raise SystemExit("Config error: invalid cache_enabled")
 try:
-    config["entries_max_cache"] = int(config.get("entries_max_cache", "5"))
+    config["entries_max_cache"] = int(config.get("entries_max_cache", "2"))
 except ValueError:
     raise SystemExit("Config error: invalid entries_max_cache")
 
