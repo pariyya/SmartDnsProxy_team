@@ -5,8 +5,9 @@ import ipaddress
 
 class DNSCache:
 
-    def __init__(self):
+    def __init__(self, max_entries=None):
         self.cache = []
+        self.max_entries = max_entries
 
     def add(self, domain, ip, ttl):
 
@@ -31,6 +32,8 @@ class DNSCache:
                 item["ttl"] = ttl
                 item["time"] = time.monotonic()
                 return
+        if self.max_entries is not None and len(self.cache) >= self.max_entries:
+            self.cache.pop(0)    
 
         self.cache.append({
             "domain": domain,
