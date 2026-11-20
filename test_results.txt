@@ -1,0 +1,251 @@
+DNSProxy ready.
+
+#T1:دامنه تبلیغاتی
+Enterdomain(orexit): ads.example.com
+Domain: ads.example.com
+Source: AD_BLOCK
+Status: OK
+IP:0.0.0.0
+TTL: 60
+پاسخ دریافتی
+Domain: ads.example.com
+Source: AD_BLOCK
+Status: OK
+IP:0.0.0.0
+TTL: 60
+PASS
+
+#T2
+Enterdomain(orexit): sub.ads.example.com
+Domain: sub.ads.example.com
+Source: AD_BLOCK
+Status: OK
+IP:0.0.0.0
+TTL: 60
+پاسخ دریافتی
+Domain: sub.ads.example.com
+Source: AD_BLOCK
+Status: OK
+IP:0.0.0.0
+TTL: 60
+PASS
+
+#T3
+Enterdomain(orexit): ADS.Example.COM.
+Domain : ads.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 0.0.0.0
+TTL : 60
+پاسخ دریافتی
+Domain : ads.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 0.0.0.0
+TTL : 60
+PASS
+
+#T4
+Enter domain (or exit): notads.example.com
+Domain : notads.example.com
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+پاسخ دریافتی
+Enter domain (or exit): notads.example.com
+Domain : notads.example.com
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+PASS
+
+#T5
+Enter domain (or exit): service.example.org
+Domain : service.example.org
+Source : SANCTION
+Status : OK
+IP : 192.0.2.10
+TTL : 60
+پاسخ دریافتی
+Domain : service.example.org
+Source : SANCTION
+Status : OK
+IP : 192.0.2.10
+TTL : 60
+
+#T6
+Enter domain (or exit): both.example.com
+Domain : both.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 0.0.0.0
+TTL : 60
+پاسخ دریافتی
+Domain : both.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 0.0.0.0
+TTL : 60
+
+#T7
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+پاسخ دریافتی
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+
+#T8
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+پاسخ دریافتی
+Domain : normal.example.net
+Source : CACHE
+Status : OK
+IP : 198.51.100.7
+TTL : 1
+
+#T9
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+پاسخ دریافتی
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+
+#T10
+Enter domain (or exit): missing.example.net
+Domain : missing.example.net
+Source : UPSTREAM
+Status : NOT_FOUND
+IP :-
+TTL :-
+پاسخ دریافتی
+Domain : missing.example.net
+Source : UPSTREAM
+Status : NOT_FOUND
+IP : -
+TTL : -
+پاسخ سرور
+Request #5: missing.example.net -> NOT_FOUND
+
+#T11
+Enter domain (or exit): other.example.net
+[note] the result appears after about 2 seconds (upstream_timeout_sec)
+Domain : other.example.net
+Source : UPSTREAM
+Status : SERVER_ERROR
+IP :-
+TTL :-
+پاسخ دریافتی
+Domain : other.example.net
+Source : UPSTREAM
+Status : SERVER_ERROR
+IP :-
+TTL :-
+ترمینال اپ استریم بسته بود
+سپس
+Enter domain (or exit): ads.example.com
+Domain : ads.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 0.0.0.0
+TTL : 60
+
+#T12
+Enter domain (or exit):
+Domain : (empty)
+Source : NONE
+Status : INVALID_INPUT
+IP :-
+TTL :-
+پاسخ دریافتی
+Enter domain (or exit): 
+Domain : (empty)
+Source : NONE
+Status : INVALID_INPUT
+IP : -
+TTL : -
+
+Enter domain (or exit): bad domain.com
+Domain : bad domain.com
+Source : NONE
+Status : INVALID_INPUT
+IP :
+TTL :
+پاسخ دریافتی
+Enter domain (or exit): bad domain.com
+Domain : bad domain.com
+Source : NONE
+Status : INVALID_INPUT
+IP : -
+TTL : -
+
+Enter domain (or exit): exit
+Bye.
+
+#T13
+DNS Proxy ready.
+Enter domain (or exit): ads.example.com
+Domain : ads.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 10.0.0.1
+TTL : 60
+پاسخ دریافتی
+DNS Proxy ready.
+Enter domain (or exit): ads.example.com
+Domain : ads.example.com
+Source : AD_BLOCK
+Status : OK
+IP : 10.0.0.1
+TTL : 60
+
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+پاسخ دریافتی
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+پاسخ دریافتی
+Enter domain (or exit): normal.example.net
+Domain : normal.example.net
+Source : UPSTREAM
+Status : OK
+IP : 198.51.100.7
+TTL : 5
+

@@ -1,7 +1,6 @@
-
 import domain_utils
 from dns_cache import DNSCache
-
+from datetime import datetime
 
 class RequestManager:
 
@@ -15,14 +14,22 @@ class RequestManager:
 
     def process_request(self, domain):
 
-        domain = domain.strip().lower().rstrip(".")
+        if not isinstance(domain, str):
+            return {
+                "status": "INVALID_INPUT",
+                "ip": None,
+                "ttl": None,
+                "source": "NONE"
+            }
+
+        domain = domain_utils.normalize_domain(domain)
 
         if not domain_utils.validate_domain(domain):
             return {
                 "status": "INVALID_INPUT",
                 "ip": None,
-                "ttl": 0,
-                "source": None
+                "ttl": None,
+                "source": "NONE"
             }
 
         ad_ip = domain_utils.get_ad_list(
@@ -33,10 +40,10 @@ class RequestManager:
 
         if ad_ip is not None:
             return {
-                "status": "AD_BLOCK",
+                "status": "OK",
                 "ip": ad_ip,
                 "ttl": self.config["local_ttl"],
-                "source": "LOCAL"
+                "source": "AD_BLOCK"
             }
 
         sanction_ip = domain_utils.get_sanction_list(
@@ -47,35 +54,59 @@ class RequestManager:
 
         if sanction_ip is not None:
             return {
-                "status": "SANCTION",
+                "status": "OK",
                 "ip": sanction_ip,
                 "ttl": self.config["local_ttl"],
-                "source": "LOCAL"
+                "source": "SANCTION"
             }
 
-        cached_response = self.cache.get(domain)
+        if self.config["cache_enabled"]:
 
-        if cached_response is not None:
+            cached_response = self.cache.get(domain)
 
-            ip, ttl = cached_response
+            if cached_response is not None:
+                ip, ttl = cached_response
 
-            return {
-                "status": "OK",
-                "ip": ip,
-                "ttl": ttl,
-                "source": "CACHE"
-            }
+                return {
+                    "status": "OK",
+                    "ip": ip,
+                    "ttl": ttl,
+                    "source": "CACHE"
+                }
 
         return {
             "status": "UPSTREAM_REQUIRED",
             "ip": None,
-            "ttl": 0,
+            "ttl": None,
             "source": "UPSTREAM"
         }
 
     def save_upstream_response(self, domain, ip, ttl):
 
+        if not self.config["cache_enabled"]:
+            return
+
         if not domain_utils.validate_domain(domain):
             return
 
+        if not isinstance(ttl, int) or isinstance(ttl, bool) or ttl <= 0:
+            return
+
+        domain = domain_utils.normalize_domain(domain)
         self.cache.add(domain, ip, ttl)
+
+    def log_request(self, domain, result):
+
+        current_time = datetime.now().strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
+
+        log = (
+            f"{current_time} | {domain} | "
+            f"{result['source']} | {result['status']} | "
+            f"{result['ip'] or '-'} | "
+            f"{result['ttl'] if result['ttl'] is not None else '-'}"
+        )
+
+        with open("log.txt", "a", encoding="utf-8") as file:
+            file.write(log + "\n")
