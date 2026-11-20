@@ -4,7 +4,6 @@ from request_manager import RequestManager
 from UDP_Socket import UDPClient
 from load_domain_list import load_domain_list
 
-
 print("DNS Proxy ready.")
 
 ad_list = load_domain_list(config.ad_list_file)
@@ -18,10 +17,9 @@ request_manager = RequestManager(
 
 client = UDPClient()
 
-
 while True:
 
-    raw_domain = input("Enter domain (or exit or stats or log or cache): ")
+    raw_domain = input("Enter domain (or exit or stats or log or cache or reload or cache_max_entries): ")
 
     if raw_domain.strip().lower() == "exit":
         print("Bye.")
@@ -41,8 +39,10 @@ while True:
               print(f"{domain} | {ip} | {ttl}")
        print(entries)
        continue
-    domain = raw_domain.strip().lower().rstrip(".")
-
+    
+    elif raw_domain.strip().lower() == "reload":
+        request_manager.reload_request()
+        continue
     display_domain = domain if domain else "(empty)"
 
     result = request_manager.process_request(domain)

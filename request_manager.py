@@ -1,7 +1,7 @@
 import domain_utils
 from dns_cache import DNSCache
 from datetime import datetime
-
+import os
 class RequestManager:
 
     def __init__(self, ad_list, sanction_list, config):
@@ -10,7 +10,7 @@ class RequestManager:
         self.sanction_list = sanction_list
         self.config = config
 
-        self.cache = DNSCache()
+        self.cache = DNSCache(max_entries=self.config["entries_max_cache"])
 
     def process_request(self, domain):
 
@@ -142,4 +142,11 @@ class RequestManager:
 
         print(f"Total: {TOTAL} | AD_BLOCK: {AD_BLOCK} | SANCTION: {SANCTION} | CACHE: {CACHE} | UPSTREAM: {UPSTREAM} | ERRORS: {ERRORS}")
             
-        
+    def reload_request(self, filename="ad_list.txt"):
+        update_time = os.path.getmtime(filename)
+
+        with open(filename, "r", encoding="utf_8") as file:
+            for line in file:
+                 print(line.strip())
+
+        self.update_time = update_time

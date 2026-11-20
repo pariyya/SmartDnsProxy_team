@@ -1,4 +1,3 @@
-
 import ipaddress
 from pathlib import Path
 
@@ -84,12 +83,17 @@ if config["local_ttl"] <= 0:
 
 cache_value = config.get("cache_enabled", "true").lower()
 
+
 if cache_value == "true":
     config["cache_enabled"] = True
 elif cache_value == "false":
     config["cache_enabled"] = False
 else:
     raise SystemExit("Config error: invalid cache_enabled")
+try:
+    config["entries_max_cache"] = int(config.get("entries_max_cache", "2"))
+except ValueError:
+    raise SystemExit("Config error: invalid entries_max_cache")
 
 
 config["ad_list_file"] = base_dir / config["ad_list_file"]
@@ -111,3 +115,4 @@ local_ttl = config["local_ttl"]
 ad_list_file = config["ad_list_file"]
 sanction_list_file = config["sanction_list_file"]
 cache_enabled = config["cache_enabled"]
+entries_max_cache = config["entries_max_cache"]
